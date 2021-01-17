@@ -1,18 +1,16 @@
 const express = require("express");
-
-const app = express();
 const adminrouter = require("./routes/admin");
 const userrouter = require("./routes/user");
 const cors = require("cors");
 const { json } = require("express");
 const validate = require("./middleware/validate");
-
+const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static("views"));
 app.use('/admin', adminrouter);
 app.use('/user', userrouter);
-app.use(express.static("views"));
-
 
 app.get("/", (req, res) => {
     res.send("Home");
