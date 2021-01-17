@@ -1,19 +1,13 @@
-const mongoClient = require("mongodb").MongoClient;
-const connection_string = "mongodb://localhost:27017/";
+const mongoose = require("mongoose");
 
-exports.createPlan=(req,res,next)=>{
+const userSchema = new mongoose.Schema({
+    USER_ID: Number,
+    USER_NAME: String,
+    PASSWORD: String,
+    USER_TYPE: Number,
+    STATUS: Boolean
+});
 
-    mongoClient.connect(connection_string, { useUnifiedTopology: true }, (err, client) => {
-        if (err) throw error;
-        console.log("Connected");
-        var db = client.db("electiondb");
-        db.collection("elections").find({}).toArray((err, data) => {
-            if (err) throw error;
-            res.send("Success");
-            mongoClient.close();
-        });
-    });
-}
+const User = mongoose.model('User', userSchema);
 
-
-module.exports = mongoClient;
+module.exports = User;

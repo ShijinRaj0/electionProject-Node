@@ -1,25 +1,31 @@
-const { request } = require("express");
-const usermodel=require("../model/usermodel");
-const sql= require('mssql');
-const dbconfig=require('../db');
+const mongoose = require("mongoose");
+const user = require("../model/usermodel");
+const election = require("../model/electionmodel");
+const { connection_string } = require("../dbconfig");
 
-exports.index= (req,res)=>{
-    connect= sql.connect(dbconfig,(err)=>{
-        var request = new sql.Request();
-       request.query("SELECT * FROM TB_USER",(err,recordset)=>{
-            result= recordset.recordset;
-            res.json(result);
-            console.log(result);
-            sql.close();
-            return;
-        }
-        );
+mongoose.connect(connection_string, { useNewUrlParser: true, useUnifiedTopology: true });
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+db.once('open', () => {
+    console.log('Mongo Connected');
+});
+
+exports.index = (req, res) => {
+
+
+    //Get the default connection
+
+    //Bind connection to error event (to get notification of connection errors)
+    election.find({}, (err, result) => {
+        if (err) throw error;
+
+        user.find({ USER_ID: result[0].OWNER_ID }, (err, data) => {
+            if (err) throw error;
+            res.send(`Election -${result[0].ELECTION_TITLE} and OWNER - ${data[0].USER_NAME} `);
+        });
     });
-    //res.send("result");
 }
-
-exports.createPlan= (req,res,next)=>{
+exports.createPlan = (req, res, next) => {
     res.send(usermodel.createPlan);
     next();
 }
-
