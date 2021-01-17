@@ -30,6 +30,8 @@
 
     <button type="button" onclick="toggleNewPlan()">Create new election plan</button>
     <div id="new_election_plan" style="display: none">
+        <label for="election_id">Election id</label>
+        <input type="text" name="election_id" id="election_id" placeholder="Election id" />
         <label for="election_title">Election title</label>
         <input type="text" name="election_title" id="election_title" placeholder="Election title" />
         <label for="designation">Designation</label>
@@ -44,32 +46,38 @@
     </div>
 </body>
 <script>
-    const url="http://localhost:3001/";
+    const url = "http://localhost:3001/";
+
     function toggleNewPlan() {
         var new_election_plan = document.getElementById("new_election_plan");
         new_election_plan.style.display = (new_election_plan.style.display === "none") ? "block" : "none";
     }
+
     function createPlan() {
-        var election_title=document.getElementById("election_title").value;
-        var designation=document.getElementById("designation").value;
-        var polling_start=document.getElementById("polling_start").value;
-        var polling_end=document.getElementById("polling_end").value;
-        var nomination_end=document.getElementById("nomination_end").value;
-        var req_url=url+"user/create_plan";
-        fetch(req_url,{
-           method:"POST",
-           headers: {
-            "Content-Type":"application/json" 
-           },
-           body:JSON.stringify({
-               election_title:election_title,
-               designation:designation,
-               polling_start:polling_start,
-               polling_end:polling_end,
-               nomination_end:nomination_end
-           })
-        }).then((res)=>res.text()).then((data)=>{
-           alert(data);
+        var owner_id = 1;
+        var election_id = document.getElementById("election_id").value;
+        var election_title = document.getElementById("election_title").value;
+        var designation = document.getElementById("designation").value;
+        var polling_start = document.getElementById("polling_start").value;
+        var polling_end = document.getElementById("polling_end").value;
+        var nomination_end = document.getElementById("nomination_end").value;
+        var req_url = url + "user/createElection";
+        fetch(req_url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                election_id: election_id,
+                election_title: election_title,
+                designation: designation,
+                poll_sdate: polling_start,
+                poll_edate: polling_end,
+                nom_edate: nomination_end,
+                owner_id: 1
+            })
+        }).then((res) => res.text()).then((data) => {
+            alert(data);
         });
     }
 </script>
