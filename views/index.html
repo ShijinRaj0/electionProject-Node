@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
 </head>
+
 <body>
     <div id="home">
         <h3>Welcome,</h3>
@@ -13,35 +15,34 @@
     <p>Login</p>
     <div id="login">
         <label for="username">User Name</label>
-        <input type="text" name="username" id="inpUser"
-        placeholder="User Name"/>
+        <input type="text" name="userid" id="inpUser" placeholder="User ID" />
         <button type="button" id="btnLogin">Login</button>
     </div>
     <p>Signup</p>
     <div id="register">
         <label for="newuser">User Name</label>
-        <input type="text" name="newuser" id="inpNewuser"
-        placeholder="User Name"/>
+        <input type="text" name="newuser" id="inpNewuser" placeholder="User Name" />
         <button type="button" id="btnSignup">Signup</button>
     </div>
 </body>
 <script>
-   var btnLogin=document.getElementById("btnLogin");
-   const url="http://localhost:3001/";
-   btnLogin.addEventListener("click",()=>{
-       var username=document.getElementById("inpUser").value;
-       var req_url=url+"login";
-       fetch(req_url,{
-           method:"POST",
-           headers: {
-            "Content-Type":"application/json" 
-           },
-           body:JSON.stringify({
-               username:username
-           })
-        }).then((res)=>res.text()).then((data)=>{
-            window.location=url+"home.html";
+    var btnLogin = document.getElementById("btnLogin");
+    const url = "http://localhost:3001/";
+    btnLogin.addEventListener("click", () => {
+        var user_id = document.getElementById("inpUser").value;
+        var req_url = url + "login";
+        fetch(req_url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                user_id: user_id
+            })
+        }).then((res) => res.text()).then((data) => {
+            window.location = url + "home.html";
         });
-   });
+    });
 </script>
+
 </html>

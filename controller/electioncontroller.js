@@ -134,12 +134,17 @@ ElectionController.updateElectionPlan = (req, res) => {
 
         var election_title = req.body.election_title ? req.body.election_title : existing_plan.ELECTION_TITLE;
         var designation = req.body.designation ? req.body.designation : existing_plan.DESIGNATION;
-        var poll_sdate = req.body.poll_sdate ? req.body.poll_sdate : existing_plan.POLL_SDATE;
-        var poll_edate = req.body.poll_edate ? req.body.poll_edate : existing_plan.POLL_EDATE;
-        var nom_sdate = req.body.nom_sdate ? req.body.nom_sdate : existing_plan.NOM_SDATE;
-        var nom_edate = req.body.nom_edate ? req.body.nom_edate : existing_plan.NOM_EDATE;
+        var poll_sdate = req.body.poll_sdate;
+        var poll_edate = req.body.poll_edate;
+        var nom_sdate = req.body.nom_sdate;
+        var nom_edate = req.body.nom_edate;
         var bio_verify = req.body.bio_verify ? req.body.bio_verify : existing_plan.BIO_VERIFY;
         var status = req.body.status ? req.body.status : existing_plan.STATUS;
+
+        poll_sdate = poll_sdate ? ISODate(poll_sdate) : existing_plan.POLL_SDATE;
+        poll_edate = poll_edate ? ISODate(poll_edate) : existing_plan.POLL_EDATE;
+        nom_sdate = nom_sdate ? ISODate(nom_sdate) : existing_plan.NOM_SDATE;
+        nom_edate = nom_edate ? ISODate(nom_edate) : existing_plan.NOM_EDATE;
 
         const updated_plan = {
             ELECTION_TITLE: election_title,

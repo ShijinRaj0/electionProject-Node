@@ -37,11 +37,11 @@
         <label for="designation">Designation</label>
         <input type="text" name="designation" id="designation" placeholder="Designation" />
         <label for="polling_start">polling_start</label>
-        <input type="text" name="polling_start" id="polling_start" placeholder="polling_start" />
+        <input type="date" name="polling_start" id="polling_start" placeholder="polling_start" />
         <label for="polling_end">polling_end</label>
-        <input type="text" name="polling_end" id="polling_end" placeholder="polling_end" />
+        <input type="date" name="polling_end" id="polling_end" placeholder="polling_end" />
         <label for="nomination_end">nomination_end</label>
-        <input type="text" name="nomination_end" id="nomination_end" placeholder="nomination_end" />
+        <input type="date" name="nomination_end" id="nomination_end" placeholder="nomination_end" />
         <button type="button" id="btnCreatePlan" onclick="createPlan()">Create Plan</button>
     </div>
 </body>
@@ -59,6 +59,7 @@
         var election_title = document.getElementById("election_title").value;
         var designation = document.getElementById("designation").value;
         var polling_start = document.getElementById("polling_start").value;
+        //YYYY-MM-DD
         var polling_end = document.getElementById("polling_end").value;
         var nomination_end = document.getElementById("nomination_end").value;
         var req_url = url + "user/createElection";
