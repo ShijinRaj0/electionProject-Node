@@ -12,6 +12,7 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "md5": "^2.3.0",
     "mongodb": "^3.6.3",
     "mongoose": "^5.11.12",
     "mssql": "^6.3.1"

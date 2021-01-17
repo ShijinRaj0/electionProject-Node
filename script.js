@@ -5,6 +5,7 @@ const cors = require("cors");
 const { json } = require("express");
 const validate = require("./middleware/validate");
 const app = express();
+const md5 = require("md5");
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

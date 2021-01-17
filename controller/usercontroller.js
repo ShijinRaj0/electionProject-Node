@@ -4,7 +4,7 @@ const election = require("../model/electionmodel");
 const { connection_string } = require("../dbconfig");
 const { query } = require("express");
 const { count } = require("../model/usermodel");
-
+const md5 = require("md5");
 //Mongo DB Connection
 mongoose.connect(connection_string, { useNewUrlParser: true, useUnifiedTopology: true });
 var db = mongoose.connection;
@@ -68,8 +68,8 @@ UserController.addUser = (req, res) => {
     var user_id = req.body.user_id;
     var user_name = req.body.user_name;
     var password = req.body.password;
-    var user_type = req.body.user_type ? req.body.user_type : 2;
-    var status = req.body.status ? req.body.status : 1;
+    var user_type = req.body.user_type; //? req.body.user_type : 2
+    var status = req.body.status; // ? req.body.status : 1
     if (user_id == undefined || user_name == undefined) {
         res.send("User ID & User Name is required to create user");
         return;
@@ -81,6 +81,7 @@ UserController.addUser = (req, res) => {
             res.send("User ID already exists");
             return;
         }
+        password = password ? md5(password) : md5(user_name);
         const new_user = new user({
             USER_ID: user_id,
             USER_NAME: user_name,
@@ -118,5 +119,42 @@ UserController.deleteUserById = (req, res) => {
     });
 }
 
+//Update User details by ID
+UserController.updateUser = (req, res) => {
+    var user_id = req.body.user_id;
+    if (user_id == undefined) {
+        res.status(500).send("Invalid User ID");
+        return;
+    }
+    var query = user.find({ USER_ID: user_id }).select({ "_id": 0 });
+    query.exec((err, result) => {
+        if (err) throw err;
+        if (result.length < 1) {
+            res.status(500).send(`User ${user_id} doesn't exists`);
+            return;
+        }
+        console.log(result);
+        var existing_user = result[0];
+        var user_name = req.body.user_name ? req.body.user_name : existing_user.USER_NAME;
+        var password = req.body.password;
+        var user_type = req.body.user_type ? req.body.user_type : existing_user.USER_TYPE;
+        var status = req.body.status ? req.body.status : existing_user.STATUS;
 
+        password = password ? md5(password) : existing_user.PASSWORD;
+        const updated_user = {
+            USER_NAME: user_name,
+            PASSWORD: password,
+            USER_TYPE: user_type,
+            STATUS: status
+        };
+        console.log(updated_user);
+        user.updateOne({ "USER_ID": user_id }, updated_user, (err, result) => {
+            if (err) throw err;
+            console.log(result);
+            res.send(`Successfully updated user ${user_id} details`);
+            return
+        });
+
+    });
+}
 module.exports = UserController;
