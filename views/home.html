@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+
+<body>
+    <div id="home">
+        <h3>Welcome User,</h3>
+        <p>Voting simplified..!</p>
+    </div>
+    <p>Active elections</p>
+    <div id="active_elections">
+        <p>Election name</p>
+    </div>
+
+    <p>Upcoming elections</p>
+    <div id="upcoming_elections">
+        <p>Election name</p>
+    </div>
+    <p>Previous elections</p>
+    <div id="prev_elections">
+        <p>Election name</p>
+    </div>
+
+    <p>Create new election plan</p>
+
+    <button type="button" onclick="toggleNewPlan()">Create new election plan</button>
+    <div id="new_election_plan" style="display: none">
+        <label for="election_title">Election title</label>
+        <input type="text" name="election_title" id="election_title" placeholder="Election title" />
+        <label for="designation">Designation</label>
+        <input type="text" name="designation" id="designation" placeholder="Designation" />
+        <label for="polling_start">polling_start</label>
+        <input type="text" name="polling_start" id="polling_start" placeholder="polling_start" />
+        <label for="polling_end">polling_end</label>
+        <input type="text" name="polling_end" id="polling_end" placeholder="polling_end" />
+        <label for="nomination_end">nomination_end</label>
+        <input type="text" name="nomination_end" id="nomination_end" placeholder="nomination_end" />
+        <button type="button" id="btnCreatePlan" onclick="createPlan()">Create Plan</button>
+    </div>
+</body>
+<script>
+    const url="http://localhost:3001/";
+    function toggleNewPlan() {
+        var new_election_plan = document.getElementById("new_election_plan");
+        new_election_plan.style.display = (new_election_plan.style.display === "none") ? "block" : "none";
+    }
+    function createPlan() {
+        var election_title=document.getElementById("election_title").value;
+        var designation=document.getElementById("designation").value;
+        var polling_start=document.getElementById("polling_start").value;
+        var polling_end=document.getElementById("polling_end").value;
+        var nomination_end=document.getElementById("nomination_end").value;
+        var req_url=url+"user/create_plan";
+        fetch(req_url,{
+           method:"POST",
+           headers: {
+            "Content-Type":"application/json" 
+           },
+           body:JSON.stringify({
+               election_title:election_title,
+               designation:designation,
+               polling_start:polling_start,
+               polling_end:polling_end,
+               nomination_end:nomination_end
+           })
+        }).then((res)=>res.text()).then((data)=>{
+           alert(data);
+        });
+    }
+</script>
+
+</html>
