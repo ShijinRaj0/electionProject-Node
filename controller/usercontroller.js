@@ -12,13 +12,7 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 db.once('open', () => {
     console.log('Mongo Connected');
 });
-var UserController = {
-    index: null,
-    getUsers: null,
-    getUserById: null,
-    addUser: null,
-    deleteUserById: null
-};
+var UserController = {};
 //Index function
 UserController.index = (req, res) => {
     election.find({}, (err, result) => {
