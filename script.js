@@ -29,7 +29,32 @@ app.get("/signup", (req, res) => {
 });
 
 app.get("/pug", (req, res) => {
-    res.render("dashboard");
+    var data = {
+        title: "PUG TEST",
+        tables: {
+            countries: [{
+                    country: "United States",
+                    percentage: 80.3,
+                }, {
+                    country: "Russia",
+                    percentage: 5.6,
+                },
+                {
+                    country: "Spain",
+                    percentage: 2.1,
+                },
+                {
+                    country: "India",
+                    percentage: 1.9,
+                },
+                {
+                    country: "France",
+                    percentage: 1.5,
+                }
+            ],
+        },
+    };
+    res.render("dashboard", data);
 });
 const PORT = process.env.PORT || '3001';
 app.listen(PORT, () => {

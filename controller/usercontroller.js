@@ -15,6 +15,38 @@ db.once('open', () => {
 var UserController = {};
 //Index function
 UserController.index = (req, res) => {
+    var data = {
+        title: "Profile",
+        tables: {
+            countries: [{
+                    country: "United States",
+                    percentage: 80.3,
+                }, {
+                    country: "Russia",
+                    percentage: 5.6,
+                },
+                {
+                    country: "Spain",
+                    percentage: 2.1,
+                },
+                {
+                    country: "India",
+                    percentage: 1.9,
+                },
+                {
+                    country: "France",
+                    percentage: 1.5,
+                }
+            ],
+            user_data: {
+                user_name: "Mike11",
+                email: "mike@email.com",
+                phone: "9876543210"
+            }
+        },
+    };
+    res.render("dashboard", data);
+    /*
     election.find({}, (err, result) => {
         if (err) throw error;
 
@@ -22,7 +54,7 @@ UserController.index = (req, res) => {
             if (err) throw error;
             res.send(`Election -${result[0].ELECTION_TITLE} and OWNER - ${data[0].USER_NAME} `);
         });
-    });
+    });*/
 }
 
 //Get all User details

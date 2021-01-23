@@ -1,6 +1,6 @@
 doctype html
 html
-title W3.CSS Template
+title=title
 meta(charset='UTF-8')
 meta(name='viewport' content='width=device-width, initial-scale=1')
 link(rel='preconnect' href='https://fonts.gstatic.com')
@@ -134,24 +134,10 @@ include ./sidebar.pug
   .w3-container
     h5 Countries
     table.w3-table.w3-striped.w3-bordered.w3-border.w3-hoverable.w3-white
-      tr
-        td United States
-        td 65%
-      tr
-        td UK
-        td 15.7%
-      tr
-        td Russia
-        td 5.6%
-      tr
-        td Spain
-        td 2.1%
-      tr
-        td India
-        td 1.9%
-      tr
-        td France
-        td 1.5%
+      each country in tables.countries
+        tr
+          td #{country.country}
+          td #{country.percentage}%
     br
     button.w3-button.w3-dark-grey
       | More Countries &nbsp;
@@ -162,15 +148,15 @@ include ./sidebar.pug
     ul.w3-ul.w3-card-4.w3-white
       li.w3-padding-16
         img.w3-left.w3-circle.w3-margin-right(src='assets/img/avatar2.png' style='width:35px')
-        span.w3-xlarge Mike
+        span.w3-xlarge #{tables.user_data.user_name}
         br
       li.w3-padding-16
-        img.w3-left.w3-circle.w3-margin-right(src='assets/img/avatar5.png' style='width:35px')
-        span.w3-xlarge Jill
+        img.w3-left.w3-circle.w3-margin-right(src='assets/img/email.png' style='width:35px')
+        span.w3-xlarge #{tables.user_data.email}
         br
       li.w3-padding-16
-        img.w3-left.w3-circle.w3-margin-right(src='assets/img/avatar6.png' style='width:35px')
-        span.w3-xlarge Jane
+        img.w3-left.w3-circle.w3-margin-right(src='assets/img/phone.png' style='width:35px')
+        span.w3-xlarge #{tables.user_data.phone}
         br
   hr
   .w3-container
